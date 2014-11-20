@@ -33,17 +33,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL(sql);
 	}
 	
+	public void createTableInfoTable(SQLiteDatabase db ,String sql){
+		db.execSQL(sql);
+	}
+	
 	public Cursor getAllTableName(SQLiteDatabase db){
 		String sql = "select name from sqlite_master where type = 'table'";
 		return db.rawQuery(sql, null);
 	}
 	
 	public Cursor getTitleById(SQLiteDatabase db,String tableName,int id){
-		String sql = "select * from " + tableName + "where id = " + id;
+		String sql = "select * from " + tableName + " where id = " + id;
 		return db.rawQuery(sql, null);
 	}
 	
 	public void insert(SQLiteDatabase db ,String tableName ,ContentValues values){
 		db.insert(tableName, null, values);
+	}
+	
+	public Cursor getInfoById(SQLiteDatabase db,int id,String tableName){
+		String sql = "select * from " + tableName + " where id = " + id;
+		return db.rawQuery(sql, null);
+	}
+	
+	public void updateInfo(SQLiteDatabase db ,String tableName ,ContentValues values ,String where){
+		db.update(tableName, values, where, null);
+	}
+	
+	public void dropTable(SQLiteDatabase db , String tableName){
+		String sql = "drop table " + tableName;
+		db.execSQL(sql);
+	}
+	
+	public void deleteDB(Context context,String dbName){
+		context.deleteDatabase(dbName);
 	}
 }

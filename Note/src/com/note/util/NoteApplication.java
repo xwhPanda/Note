@@ -3,6 +3,8 @@ package com.note.util;
 import com.note.db.DatabaseHelper;
 
 import android.app.Application;
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 
 public class NoteApplication extends Application {
 
