@@ -29,7 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	public void createTable(SQLiteDatabase db ,String name){
-		String sql = "create table if not exists " + name + "(id int primary key,title varchar,content text,create_date varchar(20),modify_date varchar(20),pic blob,picpath varchar)";
+		String sql = "create table if not exists " + name + "(id integer primary key autoincrement,title varchar,content text,create_date varchar(20),modify_date varchar(20),pic blob,picpath varchar)";
 		db.execSQL(sql);
 	}
 	
@@ -56,10 +56,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return db.rawQuery(sql, null);
 	}
 	
+	public Cursor getAllInfo(SQLiteDatabase db , String tableName){
+		String sql = "select * from " + tableName;
+		return db.rawQuery(sql, null);
+	}
+	
 	public void updateInfo(SQLiteDatabase db ,String tableName ,ContentValues values ,String where){
 		db.update(tableName, values, where, null);
 	}
-	
+		
 	public void dropTable(SQLiteDatabase db , String tableName){
 		String sql = "drop table " + tableName;
 		db.execSQL(sql);
