@@ -3,6 +3,7 @@ package com.note.activity;
 import com.note.util.GlobalConsts;
 import com.note.util.NoteApplication;
 import com.note.util.TitleInfo;
+import com.note.util.Tools;
 
 import android.app.Activity;
 import android.content.ContentValues;
@@ -26,6 +27,7 @@ public class Splash extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash);
+		Tools.init(this);
 		initData();
 		if (count == 0) {
 			createTable(db);

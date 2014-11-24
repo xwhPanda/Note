@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="blue">#1874CD</color>
+    <color name="dialog_bg">#ffe74c3c</color>
+    <color name="white">#FFFFFF</color>
+    
+    <color name="btn_press_color">#FFa5281b</color>
+    <color name="btn_unpress_color">#FFc0392b</color>
 </resources>

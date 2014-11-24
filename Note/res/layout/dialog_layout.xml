@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+   
+	<LinearLayout 
+	    android:id="@+id/parent_layout"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_centerInParent="true"
+	    android:background="@drawable/dialog_bg"
+	    android:orientation="vertical">
+	    
+	    <RelativeLayout 
+	        android:id="@+id/title_layout"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center_vertical"
+	        android:background="#22000000">
+	        <TextView
+	            android:id="@+id/title"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:textColor="@color/white"
+	            android:text="@string/sort"/>
+	    </RelativeLayout>
+	    
+	    <RelativeLayout 
+	        android:id="@+id/content_layout"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center">
+	        <EditText
+	            android:id="@+id/content"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_centerInParent="true"
+	            android:gravity="center"
+	            android:singleLine="true"
+	            android:textColor="@color/dialog_bg"
+	            android:maxLength="6"/>
+	    </RelativeLayout>
+	    
+	    <RelativeLayout 
+	        android:id="@+id/btn_layout"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content">
+	        <Button 
+	            android:id="@+id/left_btn"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:background="@drawable/btn_press_selector"
+	            android:gravity="center"
+	            android:textColor="@color/white"
+	            android:text="@string/cancle"/>
+	        
+	        <Button 
+	            android:id="@+id/right_btn"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+	            android:background="@drawable/btn_press_selector"
+	            android:gravity="center"
+	            android:textColor="@color/white"
+	            android:text="@string/confirm"/>
+	    </RelativeLayout>
+	</LinearLayout>
+</RelativeLayout>
