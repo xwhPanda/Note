@@ -4,6 +4,14 @@
     android:layout_height="match_parent" 
     android:background="@android:color/white">
     
+    <TextView 
+        android:id="@+id/main_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#d94839"
+        android:textColor="@color/white"
+        android:gravity="center"/>
+    
     <Button 
         android:id="@+id/creatDB_btn"
         android:layout_width="wrap_content"

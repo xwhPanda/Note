@@ -25,12 +25,7 @@ public class MainActivity extends Activity implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		if (v.getId() == R.id.creatDB_btn) {
-			new NiftyDialogBuilder(this,R.style.MyDialogTheme).show();
-//			NoteApplication.dBHelper.createTable(db, "杂谈");
-//			ContentValues cv = new ContentValues();
-//			cv.put("table_name", "杂谈");
-//			cv.put("title", "杂谈");
-//			NoteApplication.dBHelper.insert(db, GlobalConsts.TABLE_INFO_NAME, cv);
+			new NiftyDialogBuilder(this,R.style.MyDialogTheme).withTipVisible(View.INVISIBLE).withContentVisible(View.VISIBLE).show();
 		}
 	}
 	

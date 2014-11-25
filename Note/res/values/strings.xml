@@ -4,4 +4,5 @@
 	<string name="sort">分类</string>
 	<string name="confirm">确定</string>
 	<string name="cancle">取消</string>
+	<string name="tip_text">是否保存?</string>
 </resources>

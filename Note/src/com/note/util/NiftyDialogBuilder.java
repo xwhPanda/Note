@@ -2,18 +2,27 @@ package com.note.util;
 
 import com.note.activity.R;
 
+import android.animation.Animator;
+import android.animation.Animator.AnimatorListener;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class NiftyDialogBuilder extends Dialog implements DialogInterface{
+public class NiftyDialogBuilder extends Dialog implements DialogInterface,OnClickListener{
 	private View mView;
 	private RelativeLayout mMianLayout;
 	private LinearLayout mParentLayout;
@@ -21,6 +30,7 @@ public class NiftyDialogBuilder extends Dialog implements DialogInterface{
 	private RelativeLayout mContentLayout;
 	private RelativeLayout mBtnLayout;
 	private TextView mTitle;
+	private TextView mTip;
 	private EditText mContent;
 	private Button mLeftBtn;
 	private Button mRightBtn;
@@ -34,6 +44,15 @@ public class NiftyDialogBuilder extends Dialog implements DialogInterface{
 		super(context , theme);
 		initView(context);
 	}
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		WindowManager.LayoutParams lp = getWindow().getAttributes();
+		lp.width = ViewGroup.LayoutParams.MATCH_PARENT;
+		lp.height = ViewGroup.LayoutParams.MATCH_PARENT;
+		getWindow().setAttributes(lp);
+	}
 
 	private void initView(Context context){
 		mView = View.inflate(context, R.layout.dialog_layout, null);
@@ -44,18 +63,27 @@ public class NiftyDialogBuilder extends Dialog implements DialogInterface{
 		mContentLayout = (RelativeLayout) mView.findViewById(R.id.content_layout);
 		mBtnLayout = (RelativeLayout) mView.findViewById(R.id.btn_layout);
 		mTitle = (TextView) mView.findViewById(R.id.title);
+		mTip = (TextView) mView.findViewById(R.id.tip_text);
 		mContent = (EditText) mView.findViewById(R.id.content);
 		mLeftBtn = (Button) mView.findViewById(R.id.left_btn);
 		mRightBtn = (Button) mView.findViewById(R.id.right_btn);
 		
 		this.setOnShowListener(new OnShowListener() {
-			
+			@SuppressLint("NewApi")
 			@Override
 			public void onShow(DialogInterface dialog) {
+				AnimatorSet mAnimatorSet = new AnimatorSet();
+				mAnimatorSet.playTogether(ObjectAnimator.ofFloat(mMianLayout, "translationX", Tools.width,0).setDuration(300));
+				mAnimatorSet.playTogether(ObjectAnimator.ofFloat(mMianLayout, "alpha", 0,1).setDuration(300));
+				mAnimatorSet.start();
 			}
 		});
 		
+		mLeftBtn.setOnClickListener(this);
+		mRightBtn.setOnClickListener(this);
+		
 		mTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, Tools.width * 40 / 720);
+		mTip.setTextSize(TypedValue.COMPLEX_UNIT_PX, Tools.width * 35 / 720);
 		mLeftBtn.setTextSize(TypedValue.COMPLEX_UNIT_PX, Tools.width * 30 / 720);
 		mRightBtn.setTextSize(TypedValue.COMPLEX_UNIT_PX, Tools.width * 30 / 720);
 		Tools.setViewWidth(mParentLayout, Tools.width * 3/4);
@@ -83,6 +111,21 @@ public class NiftyDialogBuilder extends Dialog implements DialogInterface{
 		return this; 
 	}
 	
+	/**
+	 * 
+	 * @param visible VISIBLE 0, INVISIBLE 4 ,GONE 8
+	 * @return
+	 */
+	public NiftyDialogBuilder withTipVisible(int visible){
+		mTip.setVisibility(View.VISIBLE);
+		return this;
+	}
+	
+	public NiftyDialogBuilder withContentVisible(int visible){
+		mContent.setVisibility(visible);
+		return this;
+	}
+	
 	
 	
 	@Override
@@ -93,5 +136,41 @@ public class NiftyDialogBuilder extends Dialog implements DialogInterface{
 	@Override
 	public void dismiss() {
 		super.dismiss();
+	}
+
+	@SuppressLint("NewApi")
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.left_btn:
+			break;
+		}
+		AnimatorSet mAnimatorSet = new AnimatorSet();
+		mAnimatorSet.playTogether(ObjectAnimator.ofFloat(mMianLayout, "translationX", 0,Tools.width * -1).setDuration(300));
+		mAnimatorSet.playTogether(ObjectAnimator.ofFloat(mMianLayout, "alpha", 1,0).setDuration(300));
+		mAnimatorSet.start();
+		mAnimatorSet.addListener(new AnimatorListener() {
+			
+			@Override
+			public void onAnimationStart(Animator animation) {
+				// TODO Auto-generated method stub
+			}
+			
+			@Override
+			public void onAnimationRepeat(Animator animation) {
+				// TODO Auto-generated method stub
+			}
+			
+			@Override
+			public void onAnimationEnd(Animator animation) {
+				// TODO Auto-generated method stub
+				dismiss();
+			}
+			
+			@Override
+			public void onAnimationCancel(Animator animation) {
+				// TODO Auto-generated method stub
+			}
+		});
 	}
 }
