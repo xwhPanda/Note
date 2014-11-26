@@ -117,7 +117,7 @@ public class NiftyDialogBuilder extends Dialog implements DialogInterface,OnClic
 	 * @return
 	 */
 	public NiftyDialogBuilder withTipVisible(int visible){
-		mTip.setVisibility(View.VISIBLE);
+		mTip.setVisibility(visible);
 		return this;
 	}
 	
