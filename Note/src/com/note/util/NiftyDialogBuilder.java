@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -34,6 +35,7 @@ public class NiftyDialogBuilder extends Dialog implements DialogInterface,OnClic
 	private EditText mContent;
 	private Button mLeftBtn;
 	private Button mRightBtn;
+	private int type = 0;
 
 	public NiftyDialogBuilder(Context context) {
 		super(context);
@@ -111,6 +113,11 @@ public class NiftyDialogBuilder extends Dialog implements DialogInterface,OnClic
 		return this; 
 	}
 	
+	public NiftyDialogBuilder withType(int type){
+		this.type = type;
+		return this;
+	}
+	
 	/**
 	 * 
 	 * @param visible VISIBLE 0, INVISIBLE 4 ,GONE 8
@@ -172,5 +179,10 @@ public class NiftyDialogBuilder extends Dialog implements DialogInterface,OnClic
 				// TODO Auto-generated method stub
 			}
 		});
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		return true;
 	}
 }
