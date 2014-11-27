@@ -1,5 +1,8 @@
 package com.note.util;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.note.activity.R;
 
 import android.animation.Animator;
@@ -8,9 +11,13 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
@@ -22,6 +29,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class NiftyDialogBuilder extends Dialog implements DialogInterface,OnClickListener{
 	private View mView;
@@ -36,14 +44,17 @@ public class NiftyDialogBuilder extends Dialog implements DialogInterface,OnClic
 	private Button mLeftBtn;
 	private Button mRightBtn;
 	private int type = 0;
+	private Context context;
 
 	public NiftyDialogBuilder(Context context) {
 		super(context);
+		this.context = context;
 		initView(context);
 	}
 	
 	public NiftyDialogBuilder(Context context , int theme) {
 		super(context , theme);
+		this.context = context;
 		initView(context);
 	}
 	
@@ -69,6 +80,8 @@ public class NiftyDialogBuilder extends Dialog implements DialogInterface,OnClic
 		mContent = (EditText) mView.findViewById(R.id.content);
 		mLeftBtn = (Button) mView.findViewById(R.id.left_btn);
 		mRightBtn = (Button) mView.findViewById(R.id.right_btn);
+		
+		mContent.addTextChangedListener(textWatcher);
 		
 		this.setOnShowListener(new OnShowListener() {
 			@SuppressLint("NewApi")
@@ -148,14 +161,9 @@ public class NiftyDialogBuilder extends Dialog implements DialogInterface,OnClic
 	@SuppressLint("NewApi")
 	@Override
 	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.left_btn:
-			break;
-		}
 		AnimatorSet mAnimatorSet = new AnimatorSet();
 		mAnimatorSet.playTogether(ObjectAnimator.ofFloat(mMianLayout, "translationX", 0,Tools.width * -1).setDuration(300));
 		mAnimatorSet.playTogether(ObjectAnimator.ofFloat(mMianLayout, "alpha", 1,0).setDuration(300));
-		mAnimatorSet.start();
 		mAnimatorSet.addListener(new AnimatorListener() {
 			
 			@Override
@@ -179,10 +187,61 @@ public class NiftyDialogBuilder extends Dialog implements DialogInterface,OnClic
 				// TODO Auto-generated method stub
 			}
 		});
+		switch (v.getId()) {
+		case R.id.left_btn:
+			mAnimatorSet.start();
+			break;
+			
+		case R.id.right_btn:
+			if (mContent.getText() != null && !mContent.getText().toString().equals("")) {
+				mAnimatorSet.start();
+				ContentValues cv = new ContentValues();
+				cv.put("table_name", mContent.getText().toString());
+				cv.put("title", mContent.getText().toString());
+				NoteApplication.dBHelper.insert(NoteApplication.dBHelper.getWritableDatabase(), GlobalConsts.TABLE_INFO_NAME, cv);
+				NoteApplication.dBHelper.createTable(NoteApplication.dBHelper.getWritableDatabase(), mContent.getText().toString());
+			}else {
+				Toast.makeText(context, R.string.not_be_null, Toast.LENGTH_SHORT).show();
+			}
+			break;
+		}
 	}
 	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		return true;
 	}
+	
+	private static String stringFilter(String string){
+		String   regEx  =  "[^a-zA-Z0-9\u4E00-\u9FA5]";                     
+	      Pattern   p   =   Pattern.compile(regEx);     
+	      Matcher   m   =   p.matcher(string);     
+	      m.find();
+	      for(int i = 1 ; i <=m.groupCount() ; i++){
+	    	  Log.e("TAG", m.group(i) + "");
+	      }
+	      return   m.replaceAll("").trim();    
+	}
+	
+	private TextWatcher textWatcher = new TextWatcher() {
+		
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before, int count) {
+			String editable = mContent.getText().toString();  
+	          String str = stringFilter(editable.toString());
+	          if(!editable.equals(str)){
+	        	  mContent.setText(str);
+	        	  mContent.setSelection(str.length());
+	          }
+		}
+		
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count,
+				int after) {
+		}
+		
+		@Override
+		public void afterTextChanged(Editable s) {
+		}
+	};
 }
