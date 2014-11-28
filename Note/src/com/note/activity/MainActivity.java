@@ -1,5 +1,6 @@
 package com.note.activity;
 
+import com.note.adapter.ListAdapter;
 import com.note.util.GlobalConsts;
 import com.note.util.MyAnimations;
 import com.note.util.NiftyDialogBuilder;
@@ -9,12 +10,14 @@ import android.app.Activity;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 public class MainActivity extends Activity implements OnClickListener{
@@ -24,6 +27,7 @@ public class MainActivity extends Activity implements OnClickListener{
 	private ImageView show_hide_icon;
 	private ImageButton add_btn;
 	private ImageButton about_btn;
+	private ListView mListView;
 	private boolean isShowing;
 
 	@Override
@@ -37,10 +41,13 @@ public class MainActivity extends Activity implements OnClickListener{
 		show_hide_icon = (ImageView) findViewById(R.id.show_hide_icon);
 		add_btn = (ImageButton) findViewById(R.id.add_btn);
 		about_btn = (ImageButton) findViewById(R.id.about_btn);
+		mListView = (ListView) findViewById(R.id.listview);
 		
 		show_hide_btn.setOnClickListener(this);
 		add_btn.setOnClickListener(this);
 		about_btn.setOnClickListener(this);
+		
+		mListView.setAdapter(new ListAdapter(this, GlobalConsts.TITLES));
 	}
 	
 	@Override
@@ -66,5 +73,15 @@ public class MainActivity extends Activity implements OnClickListener{
 			db.close();
 		}
 	};
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			System.exit(0);
+			return false;
+		}else {
+			return super.onKeyDown(keyCode, event);
+		}
+	}
 }
 	

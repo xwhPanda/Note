@@ -193,13 +193,21 @@ public class NiftyDialogBuilder extends Dialog implements DialogInterface,OnClic
 			break;
 			
 		case R.id.right_btn:
-			if (mContent.getText() != null && !mContent.getText().toString().equals("")) {
+			String title = mContent.getText().toString();
+			if (title != null && !title.equals("")) {
+				for(TitleInfo info : GlobalConsts.TITLES){
+					if (info.getTable_name().equals(title) || info.getTitle().equals(title)) {
+						Toast.makeText(context, R.string.is_exists, Toast.LENGTH_SHORT).show();
+						return;
+					}
+				}
+				Log.e("TAG", "ss");
 				mAnimatorSet.start();
 				ContentValues cv = new ContentValues();
-				cv.put("table_name", mContent.getText().toString());
-				cv.put("title", mContent.getText().toString());
+				cv.put("table_name", title);
+				cv.put("title", title);
 				NoteApplication.dBHelper.insert(NoteApplication.dBHelper.getWritableDatabase(), GlobalConsts.TABLE_INFO_NAME, cv);
-				NoteApplication.dBHelper.createTable(NoteApplication.dBHelper.getWritableDatabase(), mContent.getText().toString());
+				NoteApplication.dBHelper.createTable(NoteApplication.dBHelper.getWritableDatabase(), title);
 			}else {
 				Toast.makeText(context, R.string.not_be_null, Toast.LENGTH_SHORT).show();
 			}
@@ -216,10 +224,6 @@ public class NiftyDialogBuilder extends Dialog implements DialogInterface,OnClic
 		String   regEx  =  "[^a-zA-Z0-9\u4E00-\u9FA5]";                     
 	      Pattern   p   =   Pattern.compile(regEx);     
 	      Matcher   m   =   p.matcher(string);     
-	      m.find();
-	      for(int i = 1 ; i <=m.groupCount() ; i++){
-	    	  Log.e("TAG", m.group(i) + "");
-	      }
 	      return   m.replaceAll("").trim();    
 	}
 	

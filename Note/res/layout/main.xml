@@ -11,6 +11,11 @@
         android:background="#d94839"
         android:gravity="center"
         android:textColor="@color/white" />
+    
+    <ListView 
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <RelativeLayout
         android:id="@+id/add_btn_wrapper"
@@ -18,7 +23,6 @@
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:background="#d94839"
         android:clipChildren="false"
         android:clipToPadding="false" >
 

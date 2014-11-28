@@ -52,7 +52,9 @@ public class Splash extends Activity {
 			info.setId(cursor.getInt(cursor.getColumnIndex("id")));
 			info.setTable_name(cursor.getString(cursor.getColumnIndex("table_name")));
 			info.setTitle(cursor.getString(cursor.getColumnIndex("title")));
-			Log.e("TAG", info.getTitle() + "/" + info.getTable_name());
+			info.setCount(cursor.getInt(cursor.getColumnIndex("count")));
+			info.setCreate_date(cursor.getString(cursor.getColumnIndex("create_date")));
+			info.setModify_date(cursor.getString(cursor.getColumnIndex("modify_date")));
 			GlobalConsts.TITLES.add(info);
 		}
 		cursor.close();
@@ -77,6 +79,9 @@ public class Splash extends Activity {
 			cv.put("id", i);
 			cv.put("table_name", GlobalConsts.SORTS_TABLE_NAME[i]);
 			cv.put("title", getResources().getString(GlobalConsts.SORTS[i]));
+			cv.put("count", 0);
+			cv.put("create_date", GlobalConsts.getDateStr());
+			cv.put("modify_date", GlobalConsts.getDateStr());
 			NoteApplication.dBHelper.insert(db, GlobalConsts.TABLE_INFO_NAME, cv);
 			NoteApplication.dBHelper.createTable(db, GlobalConsts.SORTS_TABLE_NAME[i]);
 		}

@@ -6,6 +6,7 @@
 	<string name="cancle">取消</string>
 	<string name="tip_text">是否保存?</string>
 	<string name="not_be_null">分类名不能为空</string>
+	<string name="is_exists">分类名已存在</string>
 	
 	<string name="remind">日常提醒</string>
 	<string name="feeling">生活感想</string>
