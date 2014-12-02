@@ -99,6 +99,13 @@ public class ListAdapter extends BaseAdapter {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				// TODO Auto-generated method stub
+				if (event.getAction() == MotionEvent.ACTION_DOWN) {
+					
+				}else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+					
+				}else if (event.getAction() == MotionEvent.ACTION_UP) {
+					
+				}
 				return true;
 			}
 		});
