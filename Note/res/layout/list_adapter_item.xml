@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scroll_view"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:scrollbars="none" >
@@ -47,9 +48,10 @@
         </RelativeLayout>
 
         <Button
+            android:id="@+id/delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="btn" />
+            android:text="delete" />
     </LinearLayout>
 
 </HorizontalScrollView>

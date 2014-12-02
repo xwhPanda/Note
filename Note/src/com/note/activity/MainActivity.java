@@ -53,7 +53,11 @@ public class MainActivity extends Activity implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		if (v.getId() == R.id.add_btn) {
-			new NiftyDialogBuilder(this,R.style.MyDialogTheme).withType(GlobalConsts.SAVE_SORT).withTipVisible(View.INVISIBLE).withContentVisible(View.VISIBLE).show();
+			new NiftyDialogBuilder(this,R.style.MyDialogTheme)
+			.withType(GlobalConsts.SAVE_SORT)
+			.withTipVisible(View.INVISIBLE)
+			.withContentVisible(View.VISIBLE)
+			.show();
 		}else if (v.getId() == R.id.show_hide_btn) {
 			if (isShowing) {
 				MyAnimations.startAnimationsIn(add_btn_wrapper, 300);

@@ -131,6 +131,11 @@ public class NiftyDialogBuilder extends Dialog implements DialogInterface,OnClic
 		return this;
 	}
 	
+	public NiftyDialogBuilder withTip(CharSequence text){
+		mTip.setText(text);
+		return this;
+	}
+	
 	/**
 	 * 
 	 * @param visible VISIBLE 0, INVISIBLE 4 ,GONE 8
@@ -193,23 +198,26 @@ public class NiftyDialogBuilder extends Dialog implements DialogInterface,OnClic
 			break;
 			
 		case R.id.right_btn:
-			String title = mContent.getText().toString();
-			if (title != null && !title.equals("")) {
-				for(TitleInfo info : GlobalConsts.TITLES){
-					if (info.getTable_name().equals(title) || info.getTitle().equals(title)) {
-						Toast.makeText(context, R.string.is_exists, Toast.LENGTH_SHORT).show();
-						return;
+			if (type == GlobalConsts.SAVE_SORT) {
+				String title = mContent.getText().toString();
+				if (title != null && !title.equals("")) {
+					for(TitleInfo info : GlobalConsts.TITLES){
+						if (info.getTable_name().equals(title) || info.getTitle().equals(title)) {
+							Toast.makeText(context, R.string.is_exists, Toast.LENGTH_SHORT).show();
+							return;
+						}
 					}
+					mAnimatorSet.start();
+					ContentValues cv = new ContentValues();
+					cv.put("table_name", title);
+					cv.put("title", title);
+					NoteApplication.dBHelper.insert(NoteApplication.dBHelper.getWritableDatabase(), GlobalConsts.TABLE_INFO_NAME, cv);
+					NoteApplication.dBHelper.createTable(NoteApplication.dBHelper.getWritableDatabase(), title);
+				}else {
+					Toast.makeText(context, R.string.not_be_null, Toast.LENGTH_SHORT).show();
 				}
-				Log.e("TAG", "ss");
+			}else if (type == GlobalConsts.SAVE_NOTE) {
 				mAnimatorSet.start();
-				ContentValues cv = new ContentValues();
-				cv.put("table_name", title);
-				cv.put("title", title);
-				NoteApplication.dBHelper.insert(NoteApplication.dBHelper.getWritableDatabase(), GlobalConsts.TABLE_INFO_NAME, cv);
-				NoteApplication.dBHelper.createTable(NoteApplication.dBHelper.getWritableDatabase(), title);
-			}else {
-				Toast.makeText(context, R.string.not_be_null, Toast.LENGTH_SHORT).show();
 			}
 			break;
 		}
