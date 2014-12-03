@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.note.activity.R;
 import com.note.util.GlobalConsts;
+import com.note.util.ItemView;
 import com.note.util.NiftyDialogBuilder;
 import com.note.util.TitleInfo;
 import com.note.util.Tools;
@@ -20,6 +21,7 @@ import android.view.ViewTreeObserver.OnScrollChangedListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,8 +29,9 @@ public class ListAdapter extends BaseAdapter {
 	private LayoutInflater mInflater;
 	private ArrayList<TitleInfo> titles;
 	private Context context;
-	private int x;
-	private int y;
+	private Holder holder;
+	private float x;
+	private float y;
 	
 	public ListAdapter(Context context , ArrayList<TitleInfo> titels){
 		mInflater = LayoutInflater.from(context);
@@ -56,23 +59,24 @@ public class ListAdapter extends BaseAdapter {
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		Holder holder = null;
-		if (convertView == null) {
+		holder = null;
+		ItemView itemView = (ItemView) convertView;
+		if (itemView == null) {
 			holder = new Holder();
-			convertView = mInflater.inflate(R.layout.list_adapter_item, parent,false);
+			itemView = new ItemView(context);
 			
-			holder.left_layout = (RelativeLayout) convertView.findViewById(R.id.left_layout);
-			holder.title = (TextView) convertView.findViewById(R.id.title);
-			holder.count = (TextView) convertView.findViewById(R.id.count);
-			holder.create_time = (TextView) convertView.findViewById(R.id.create_date);
-			holder.modify_time = (TextView) convertView.findViewById(R.id.modify_date);
-			holder.delete = (Button) convertView.findViewById(R.id.delete);
-			holder.scroll_view = (HorizontalScrollView) convertView.findViewById(R.id.scroll_view);
+			holder.left_layout = (RelativeLayout) itemView.findViewById(R.id.left_layout);
+			holder.title = (TextView) itemView.findViewById(R.id.title);
+			holder.count = (TextView) itemView.findViewById(R.id.count);
+			holder.create_time = (TextView) itemView.findViewById(R.id.create_date);
+			holder.modify_time = (TextView) itemView.findViewById(R.id.modify_date);
+			holder.delete = (Button) itemView.findViewById(R.id.delete);
+			holder.scroll_view = (LinearLayout) itemView.findViewById(R.id.scroll_view);
 			
 			Tools.setViewWidth(holder.left_layout, Tools.width);
-			convertView.setTag(holder);
+			itemView.setTag(holder);
 		}else {
-			holder = (Holder) convertView.getTag();
+			holder = (Holder) itemView.getTag();
 		}
 		
 		holder.title.setText(titles.get(position).getTitle());
@@ -94,22 +98,7 @@ public class ListAdapter extends BaseAdapter {
 			}
 		});
 		
-		holder.scroll_view.setOnTouchListener(new OnTouchListener() {
-			
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				// TODO Auto-generated method stub
-				if (event.getAction() == MotionEvent.ACTION_DOWN) {
-					
-				}else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-					
-				}else if (event.getAction() == MotionEvent.ACTION_UP) {
-					
-				}
-				return true;
-			}
-		});
-		return convertView;
+		return itemView;
 	}
 	
 	class Holder{
@@ -119,7 +108,6 @@ public class ListAdapter extends BaseAdapter {
 		TextView create_time;
 		TextView modify_time;
 		Button delete;
-		HorizontalScrollView scroll_view;
+		LinearLayout scroll_view;
 	}
-
 }

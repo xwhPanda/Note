@@ -1,6 +1,7 @@
 package com.note.activity;
 
 import com.note.adapter.ListAdapter;
+import com.note.util.DeleteListView;
 import com.note.util.GlobalConsts;
 import com.note.util.MyAnimations;
 import com.note.util.NiftyDialogBuilder;
@@ -27,7 +28,7 @@ public class MainActivity extends Activity implements OnClickListener{
 	private ImageView show_hide_icon;
 	private ImageButton add_btn;
 	private ImageButton about_btn;
-	private ListView mListView;
+	private DeleteListView mListView;
 	private boolean isShowing;
 
 	@Override
@@ -41,7 +42,7 @@ public class MainActivity extends Activity implements OnClickListener{
 		show_hide_icon = (ImageView) findViewById(R.id.show_hide_icon);
 		add_btn = (ImageButton) findViewById(R.id.add_btn);
 		about_btn = (ImageButton) findViewById(R.id.about_btn);
-		mListView = (ListView) findViewById(R.id.listview);
+		mListView = (DeleteListView) findViewById(R.id.listview);
 		
 		show_hide_btn.setOnClickListener(this);
 		add_btn.setOnClickListener(this);
