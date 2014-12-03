@@ -48,4 +48,17 @@ public class ItemView extends LinearLayout {
 		}
 	}
 	
+	public void touchEvent(MotionEvent event){
+		switch (event.getAction()) {
+		case MotionEvent.ACTION_DOWN:
+			
+			break;
+
+		case MotionEvent.ACTION_MOVE:
+			break;
+		
+		case MotionEvent.ACTION_UP:
+			break;
+		}
+	}
 }
